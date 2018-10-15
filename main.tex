@@ -1,0 +1,166 @@
+\documentclass[12pt]{article} % размер шрифта
+% \usepackage{tikz} % картинки в tikz
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{microtype} % свешивание пунктуации
+\usepackage{array} % для столбцов фиксированной ширины
+\usepackage{url} % для вставки ссылок \url{...}
+\usepackage{indentfirst} % отступ в первом параграфе
+\usepackage{sectsty} % для центрирования названий частей
+\allsectionsfont{\centering} % приказываем центрировать все sections
+\usepackage{amsthm} % теоремы и доказательства
+\theoremstyle{definition} % прямой шрифт в условии теорем
+\newtheorem{theorem}{Теорема}[section]
+\usepackage{amsmath} % куча стандартных математических плюшек
+\usepackage[top=2cm, left=1.5cm, right=1.5cm, bottom=2cm]{geometry} % размер текста на странице
+\usepackage{lastpage} % чтобы узнать номер последней страницы
+\usepackage{enumitem} % дополнительные плюшки для списков
+%  например \begin{enumerate}[resume] позволяет продолжить нумерацию в новом списке
+\usepackage{caption} % подписи к картинкам без плавающего окружения figure
+
+
+\usepackage{fancyhdr} % весёлые колонтитулы
+\pagestyle{fancy}
+\lhead{Эконометрика, финтех}
+\chead{}
+\rhead{2018-10-13, встреча 4}
+\lfoot{}
+\cfoot{}
+\rfoot{\thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+
+\usepackage{todonotes} % для вставки в документ заметок о том, что осталось сделать
+% \todo{Здесь надо коэффициенты исправить}
+% \missingfigure{Здесь будет картина Последний день Помпеи}
+% команда \listoftodos — печатает все поставленные \todo'шки
+
+\usepackage{booktabs} % красивые таблицы
+% заповеди из документации:
+% 1. Не используйте вертикальные линии
+% 2. Не используйте двойные линии
+% 3. Единицы измерения помещайте в шапку таблицы
+% 4. Не сокращайте .1 вместо 0.1
+% 5. Повторяющееся значение повторяйте, а не говорите "то же"
+
+\usepackage{fontspec} % поддержка разных шрифтов
+\usepackage{polyglossia} % поддержка разных языков
+\usepackage{amsfonts}
+
+\setmainlanguage{russian}
+\setotherlanguages{english}
+
+\setmainfont{Linux Libertine O} % выбираем шрифт
+% если Linux Libertine не установлен, то
+% можно также попробовать Helvetica, Arial, Cambria и т.Д.
+
+% чтобы использовать шрифт Linux Libertine на личном компе,
+% его надо предварительно скачать по ссылке
+% http://www.linuxlibertine.org/index.php?id=91&L=1
+
+% на сервисах типа sharelatex.com этот шрифт есть :)
+
+\newfontfamily{\cyrillicfonttt}{Linux Libertine O}
+% пояснение зачем нужно шаманство с \newfontfamily
+% http://tex.stackexchange.com/questions/91507/
+
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ} % для списков с русскими буквами
+\setlist[enumerate, 2]{label=\asbuk*),ref=\asbuk*} % списки уровня 2 будут буквами а) б) ...
+
+%% эконометрические и вероятностные сокращения
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\E}{E}
+\def \hb{\hat{\beta}}{beta}
+\def \hs{\hat{\sigma}}
+\def \htheta{\hat{\theta}}
+\def \s{\sigma}
+\def \hy{\hat{y}}
+\def \hY{\hat{Y}}
+\def \v1{\vec{1}}
+\def \e{\varepsilon}
+\def \he{\hat{\e}}
+\def \hu{\hat{u}}
+\def \z{z}
+\def \hVar{\widehat{\Var}}
+\def \hCorr{\widehat{\Corr}}
+\def \hCov{\widehat{\Cov}}
+\def \cN{\mathcal{N}}
+
+
+\begin{document}
+Конспектировал: Ефим Лубошников
+\section{Свойства математического ожидания}
+Вспомним, какими свойствами обладает математическое ожидание случайной величины и случайного вектора.
+Обозначим: 
+$y_1$, $y_2$ - случайные величины,
+$y$, $z$ - случайные вектора, 
+$a$ - скалярная константа, 
+$A$, $B$ - матрицы констант.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Случайная величина & Случайный вектор  \\
+\midrule
+${E}(ay_1)=a{E}(y_1)$ & ${E}(AyB)=A{E}(y)B$\\
+${Var}(y_1)={E}(y_1^2)-{E}(y_1)^2$ & ${Var}(y)={E}(yy^T)-{E}(y){E}(y^T)$\\
+${Var}(ay_1)=a^2{Var}(ay_1)$ & ${Var}(Ay)=A({E}(yy^T)-{E}(y){E}(y^T))A^T$ \\
+${Var}(a+y_1)={Var}(y_1)$& ${Var}(a+y)={Var}(y)$ \\
+${Cov}(y_1,y_2)={E}(y_1y_2)-{E}(y_1){E}(y_2)$ & ${Cov}(y,z)={E}(yz^T)-{E}(y){E}(z^T)$ \\
+ & ${Cov}(Ay,Bz)=A{Cov}(y,z)B^T$ \\
+ & ${Cov}(y,z)={Cov}(z,y)^T$ \\
+ &Если $ y,z \in \mathbb {R}^n $, то справедливо:\\
+ & ${Cov}(y+z,w)={Cov}(y,w)+{Cov}(z,w)$ \\
+ & ${Var}(y+z)={Var}(y)+{Var}(z)+{Cov}(y,z)+{Cov}(z,y),$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Так выглядит дисперсия случайного вектора $y \in \mathbb {R}^n $:
+\[
+{Var}(y) = \begin{bmatrix}
+           {Var}(y_{1}) & {Cov}(y_{1},y_{2}) & \vdots &{Cov}(y_{1},y_{n})\\
+           {Cov}(y_{2},y_{1}) & {Var}(y_{2}) & \vdots &{Cov}(y_{2},y_{n})\\
+           \vdots & \vdots & \vdots & \vdots\\
+           {Cov}(y_{n},y_{1}) & {Cov}(y_{n},y_{2}) & \vdots &{Var}(y_{n})\\
+         \end{bmatrix}         
+         \]
+\section{Предпосылки}
+Рассмотрим задачу регрессии $y=X\beta+u$ в случае двух регрессоров: $y_i=\beta_1+\beta_2x_i+\beta_3x_i+u_i$
+Предпосылки:
+\begin{enumerate}
+    \item Предполагаем $\beta$ -неизвестная константа
+    \item $X$ должен иметь полный ранг, чтобы оценки МНК существовали. $X$ может быть:
+    \begin{enumerate}
+        \item известная константа, $y_t=\beta_1+\beta_2t+u_t$
+        \item наблюдение - случайная величина, времянной ряд.
+    \end{enumerate}
+    \item Гомоскедастичность ${Var}(u_i|X)=\sigma^2I$
+    \item Отсутствие автокорреляции
+    ${Cov}(u_i,u_j)|x)=0, при i\neq j$
+    \item {E}(u|X)=0
+\end{enumerate}
+Обозначим:
+\begin{enumerate}
+    \item $\hat{y}$ - предсказанный $y$ на тренировочной выборке.
+    \item $\hat{y}_{test}$ - предсказанный $y$ на тестовой выборке.
+\end{enumerate}
+\newpage
+Будем пользоваться результатами, полученными ранее:
+
+$\hat\beta=(X^TX)^{-1}X^Ty$,
+$\hat{y}=X\hat\beta$,$\hat{u}=y-\hat{y}$,$y_{test}=X_{test}\beta+u_{test}$,
+$\hat{y_{test}}=X_{test}\hat{\beta}$
+\subsection{Упражнение мега-матрица}
+${E}(y|X)={E}(X\beta+u|X)=X\beta+{E}(u|X)=X\beta$\\
+${E}(\beta|X)={E}((X^TX)^{-1}X^Ty|X)={E}((X^TX)^{-1}X^TX\beta|X)=(X^TX)^{-1}X^TX\beta=\beta$\\
+${Var}(y|X)={Var}(X\beta+u|X)={Var}(u|X)=\sigma^2I\\$
+${Var}(\beta|X)={Var}((X^TX)^{-1}X^Ty|X)=X^TX)^{-1}X^T{Var}(y|X)????)$\\
+${Cov}(\hat{\beta},\hat{u}|X)={Cov}((X^TX)^{-1}X^Ty,y-\hat{y}|X)=$
+
+
+\end{document}
