@@ -158,9 +158,39 @@ $\hat{y_{test}}=X_{test}\hat{\beta}$
 \subsection{Упражнение мега-матрица}
 ${E}(y|X)={E}(X\beta+u|X)=X\beta+{E}(u|X)=X\beta$\\
 ${E}(\beta|X)={E}((X^TX)^{-1}X^Ty|X)={E}((X^TX)^{-1}X^TX\beta|X)=(X^TX)^{-1}X^TX\beta=\beta$\\
-${Var}(y|X)={Var}(X\beta+u|X)={Var}(u|X)=\sigma^2I\\$
+${Var}(y|X)={Var}(X\beta+u|X)={Var}(u|X)=\sigma^2I$\\
 ${Var}(\beta|X)={Var}((X^TX)^{-1}X^Ty|X)=X^TX)^{-1}X^T{Var}(y|X)????)$\\
-${Cov}(\hat{\beta},\hat{u}|X)={Cov}((X^TX)^{-1}X^Ty,y-\hat{y}|X)=$
+${Cov}(\hat{\beta},\hat{u}|X)={Cov}((X^TX)^{-1}X^Ty,y-\hat{y}|X)=$\\\\
+
+Выведем ещё пару свойств для $RSS, ESS, TSS$:\\
+Как можно представить RSS?\\
+$RSS=\sum\limits_{i=1}^n  \hat{u_i}^2=\hat{u}^T\hat{u}=((I-H)y)^T((I-H)y)=
+y^T(I-H)^T(I-H)y=y^T(I-H)y$\\
+Далее, найдем матетическое ожидание $RSS$ при фиксированном $X$:\\
+${E}(RSS|X)={E}(y^T(I-H)y|X)=|$всегда можно взять $trace$, если результат скаляр$|={E}(tr(y^T(I-H)y|X))={E}(tr(I-H)yy^T|X))=tr((I-H){E}(yy^T))=tr(I-H)({Var}(y|X)+{E}(y|X){E}(y^T|X))=tr(I-H)(\sigma^2I+X\beta\beta^TX^T))=tr[(I-H)(\sigma^2I+X\beta\beta^TX^T))]=tr(I-H)\sigma^2+tr((I-H)(X\beta\beta^TX^T))=tr(I-H)\sigma^2=(n-k)\sigma^2$\\
+Слагаемое $(I-H)X=0$, так как $(I-H)$ - ортогональное дополнение к $X$.\\
+${{E}(RSS|X)=(n-k)\sigma^2}\\ \Rightarrow
+{\hat{\sigma}^2={{RSS}\over{n-k}}}$ - оценка разумная.\\
+\subsection{Теорема Гаусса - Маркова}\\
+\newtheorem{theorem}{\textit{Теорема}.}
+Если выполняются все предпосылки про $\beta,u,X$, существует несмещенные оценки $\hat{\beta}=(X^TX)^{-1}X^Ty$ и $\hat{\beta}_{alt}=A_{alt}^Ty$, то:\\
+\\
+- ${Var}({\hat{\beta}_{alt_j})} \gq {Var}(\hat{\beta}_j|X)$\\
+- ${Var}({\hat{\beta}_{alt})}-{Var}(\hat{\beta}|X)$ являетеся положительно определенной.\\
+\end{theorem}
+\textit{Замечение.} Первая формулировка является частным и упрощенным вариантом второй формулировки.
+\begin{proof}
+
+\hat{\beta}}=((X^TX)^{-1}X^T)^Ty=A^Ty\\
+\hat{\beta}}=
+
+
+\end{proof}
+\end{proof}
+
+
+
+
 
 
 \end{document}
