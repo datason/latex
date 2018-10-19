@@ -177,16 +177,78 @@ ${{E}(RSS|X)=(n-k)\sigma^2}\\ \Rightarrow
 \\
 - ${Var}({\hat{\beta}_{alt_j})} \gq {Var}(\hat{\beta}_j|X)$\\
 - ${Var}({\hat{\beta}_{alt})}-{Var}(\hat{\beta}|X)$ являетеся положительно определенной.\\
-\end{theorem}
+
 \textit{Замечение.} Первая формулировка является частным и упрощенным вариантом второй формулировки.
 \begin{proof}
 
-\hat{\beta}}=((X^TX)^{-1}X^T)^Ty=A^Ty\\
-\hat{\beta}}=
+$\hat{\beta}=((X^TX)^{-1}X^T)^Ty=A^Ty\\$
+$\hat{\beta}_1$ - 1 строка из $A^T$.
+$\hat{\beta_1}$ - <первый столбец в $A$,y>
+$A$ задаёт веса, с которыми надо брать $y$, чтобы получить \hat{\beta}\\
+Рассмотрим, каким образом собрана матрица $A$:\\
+
+
+$\begin{pmatrix}
+C_1 & C_2 & \dots &C_k\\
+C_1 & C_2 & \dots & C_k\\
+\vdots & \vdots & \vdots &\vdots\\
+C_1 & C_2 & \dots & C_k
+\end{pmatrix} 
+
+\begin{pmatrix}
+* & \dots \\
+* & \dots \\
+\vdots &\dots\\
+* & \dots \\
+\end{pmatrix} 
+\\
+Первая строка матрицы $A$ формируется, как линейная комбинация $C_i$: \\
+$a_1=*C_1+*C_2+...+*C_k$
+\\
+Веса, с которыми надо барть $y$, чтобы получить $\beta$ являются линейной комбинацией строк в $X$.
+\\
+
+\\
+Дисперсия ${Var}(\hat{\beta_1|X})={Var}(a_1^Ty|X})=a_1^T\sigma^2Ia_1=\sigma^2a_1^Ta_1=\sigma^2*
+\begin{Vmatrix}
+  \ a_1
+\end{Vmatrix}^2$\\
+{Var}(\hat{\beta_1}^{alt}|X)=\sigma^2
+\begin{Vmatrix}
+  \ a_1
+\end{Vmatrix}^2 \geq {Var}(\hat{\beta_1}|X)$\\
+
+Схема доказательства:\\
+1) $a_1 \in lin(...) \\
+Это следует из A=X(X^TX)^{-1}\\
+
+2) a_1^{alt}-a_1 \perp lin(...) \\
+Это следует из (a_1^{alt})^TX\beta=\beta_1=a_1^TX\beta$\\
+Рассмотрим доказательство для общего случая:\\
+$\delta={Var}(\hat{\beta}^{alt}|X)-{Var}(\hat{\beta}|X)\\
+\delta - $ положительно определённая.\\
+$\omega^T\omega \geq 0 \\
+{Var}(\omega^T \hat{})
+$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \end{proof}
-\end{proof}
+
 
 
 
