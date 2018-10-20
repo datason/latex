@@ -159,8 +159,10 @@ $\hat{y_{test}}=X_{test}\hat{\beta}$
 ${E}(y|X)={E}(X\beta+u|X)=X\beta+{E}(u|X)=X\beta$\\
 ${E}(\beta|X)={E}((X^TX)^{-1}X^Ty|X)={E}((X^TX)^{-1}X^TX\beta|X)=(X^TX)^{-1}X^TX\beta=\beta$\\
 ${Var}(y|X)={Var}(X\beta+u|X)={Var}(u|X)=\sigma^2I$\\
-${Var}(\beta|X)={Var}((X^TX)^{-1}X^Ty|X)=X^TX)^{-1}X^T{Var}(y|X)????)$\\
-${Cov}(\hat{\beta},\hat{u}|X)={Cov}((X^TX)^{-1}X^Ty,y-\hat{y}|X)=$\\\\
+${Var}(\beta|X)={Var}((X^TX)^{-1}X^Ty|X)=(X^TX)^{-1}X^T{Var}(y|X)((X^TX)^{-1}X^T)^T=(X^TX)^{-1}X^T\sigma X(X^TX)^{-1}=\sigma^2 (X^TX)^{-1}X^TX(X^TX)^{-1}=\simga^2 (X^TX)^{-1} $\\
+
+${Cov}(\hat{\beta},\hat{u}|X)={Cov}((X^TX)^{-1}X^Ty,y-\hat{y}|X)=
+{Cov}((X^TX)^{-1}X^Ty,y|X)-{Cov}((X^TX)^{-1}X^Ty,\hat{y}|X)=(X^TX)^{-1}X^T{Var}(y|X)-{Cov}(\beta,X\beta|X)=\sigma^2(X^TX)^{-1}X^T-\sigma^2(X^TX)^{-1}X^T=0$\\
 
 Выведем ещё пару свойств для $RSS, ESS, TSS$:\\
 Как можно представить RSS?\\
@@ -228,8 +230,55 @@ $a_1=*C_1+*C_2+...+*C_k$
 $\delta={Var}(\hat{\beta}^{alt}|X)-{Var}(\hat{\beta}|X)\\
 \delta - $ положительно определённая.\\
 $\omega^T\omega \geq 0 \\
-{Var}(\omega^T \hat{})
-$
+{Var}(\omega^T \hat{\beta}_{alt}|X) \geq {Var}(\omega^T \hat{\beta}|X)\\
+{Var}(a_{alt}^TY|X) \geq {Var}(a^Ty|X)\\
+1) a \in lin(столбцы X);\\
+2) a^T-a \perp lin(стоблцы X)$\\
+\end{proof}\\
+Утв.
+Если верны предпосылки о $\beta, X, u,$ и известно, что $u \sim N(0;\sigma^2I)$, то: \\
+1) $\hat{\beta}_j|X \sim N(\beta_j, {Var}(\hat{\beta}_j|X))$\\
+
+2) $\frac{\hat{\beta}_j-\beta_j}{{Var}(\beta_j|X)}=\frac{\hat{\beta}_j-\beta_j}{\kappa(\beta_j)}$\\
+
+3)Если $\exists$ 2 вложенные модели: "короткая" - частный случай "длинной", то:\\
+$$\frac{\frac{RSS_{кор}-RSS{длин}}{k_{длин}-k_{кор}}}   {\frac{RSS_{длин}}{n-k_{длин}}} \sim F_{k_{длин}-k_{кор},n-k_{длин}}$$\\
+
+Задача
+Дано:
+Модель А: $\hat{y}_i=2.7 - 3.2x_i, R^2=0.6\\
+                    (1.1) (0.6)  \\$
+Модель В: $\hat{y}_i=3.2 - 2.8x_i + 4.2z_i + 0.1x_i^2, R^2=0.7\\
+                    (1.2) (0.7)    (1.1)    (0.5)$\\
+В скобках ниже указаны стандартные ошибки\\
+
+Задание:
+Проверить гипотезу на стат. значимость при уровне доверия $\alpha = 5\% $  \\
+$H_0$: верна А.\\
+$H_A$: А - неверна, но верна В.\\
+
+Постройте 95\% доверительный интервал для \beta_x в рамках:\\
+$$\frac{\hat{\beta}_x - {\beta}_x}{\kappa(\hat{\beta}_x)} \sim t_{200-2} $$ \\
+$t_192 = N(0;1)$\\
+$-t_{cr} \leq \frac{\hat{\beta}_x - {\beta}_x}{\kappa(\hat{\beta}_x)} \geq t_{cr} $\\
+$\beta_x \in [\hat{\beta_x} - t_{cr}\kappa(\hat{\betta});\hat{\betta}_x + t_{cr}\kappa|\betta|X]$\\
+$\beta_x \in [3.2 - 1.96*0.6; -3.2 + 1.96*0.6] \approx [-4.4;2.0]$\\
+$H_0:\beta_x=0$\\
+$H_A:\beta \neq 0, при \alpha==5\%$\\
+$H_0$ отвергается, $\beta_x$ значительно отличается от нуля.\\
+
+$$R^2=1-\frac{RSS}{TSS}$$\\
+
+$$F=\frac{\frac{RSS_{кор}-RSS_{дл}}{4-2}}{\frac{RSS_{дл}}{200-4}}=\frac{(\frac{RSS_к}{TSS}-\frac{RSS_д}{TSS})/2}{\frac{RSS_д}{TSS}/196}=
+\frac{(0.4-0.3)*196}{2*0.3} \approx 3.04$$\\
+$F_{cr} = 3.04$\\
+Сравним $F_{cr}$ с $F_{2,196}$, видим, что гипотеза $H_0$ отвергается, поэтому выбираем модель В для оценки.  
+
+
+
+                    
+                
+                
 
 
 
@@ -245,9 +294,6 @@ $
 
 
 
-
-
-\end{proof}
 
 
 
