@@ -17,7 +17,7 @@
 \usepackage{enumitem} % дополнительные плюшки для списков
 %  например \begin{enumerate}[resume] позволяет продолжить нумерацию в новом списке
 \usepackage{caption} % подписи к картинкам без плавающего окружения figure
-
+\linespread{1.4}
 
 \usepackage{fancyhdr} % весёлые колонтитулы
 \pagestyle{fancy}
@@ -129,8 +129,8 @@ ${Cov}(y_1,y_2)={E}(y_1y_2)-{E}(y_1){E}(y_2)$ & ${Cov}(y,z)={E}(yz^T)-{E}(y){E}(
            {Cov}(y_{n},y_{1}) & {Cov}(y_{n},y_{2}) & \vdots &{Var}(y_{n})\\
          \end{bmatrix}         
          \]
-\section{Предпосылки}
-Рассмотрим задачу регрессии $y=X\beta+u$ в случае двух регрессоров: $y_i=\beta_1+\beta_2x_i+\beta_3x_i+u_i$
+\section{Предпосылки для теоремы Гаусса-Маркова}
+Рассмотрим задачу регрессии $y=X\beta+u$ в случае двух регрессоров: $y_i=\beta_1+\beta_2x_i+\beta_3z_i+u_i$
 Предпосылки:
 \begin{enumerate}
     \item Предполагаем $\beta$ -неизвестная константа
@@ -141,52 +141,79 @@ ${Cov}(y_1,y_2)={E}(y_1y_2)-{E}(y_1){E}(y_2)$ & ${Cov}(y,z)={E}(yz^T)-{E}(y){E}(
     \end{enumerate}
     \item Гомоскедастичность ${Var}(u_i|X)=\sigma^2I$
     \item Отсутствие автокорреляции
-    ${Cov}(u_i,u_j)|x)=0, при i\neq j$
-    \item {E}(u|X)=0
+    ${Cov}(u_i,u_j|x)=0, при i\neq j$
+    \item$ {E}(u|X)=0$
 \end{enumerate}
-Обозначим:
-\begin{enumerate}
-    \item $\hat{y}$ - предсказанный $y$ на тренировочной выборке.
-    \item $\hat{y}_{test}$ - предсказанный $y$ на тестовой выборке.
-\end{enumerate}
+Обозначим:\\
+    $\hat{y}$  -  предсказанный $y$ на тренировочной выборке.\\
+    $\hat{y}_{test}$  -  предсказанный $y$ на тестовой выборке.
 \newpage
-Будем пользоваться результатами, полученными ранее:
+\begin{doublespacing}
 
-$\hat\beta=(X^TX)^{-1}X^Ty$,
-$\hat{y}=X\hat\beta$,$\hat{u}=y-\hat{y}$,$y_{test}=X_{test}\beta+u_{test}$,
-$\hat{y_{test}}=X_{test}\hat{\beta}$
+
+
+
 \subsection{Упражнение мега-матрица}
-${E}(y|X)={E}(X\beta+u|X)=X\beta+{E}(u|X)=X\beta$\\
-${E}(\beta|X)={E}((X^TX)^{-1}X^Ty|X)={E}((X^TX)^{-1}X^TX\beta|X)=(X^TX)^{-1}X^TX\beta=\beta$\\
-${Var}(y|X)={Var}(X\beta+u|X)={Var}(u|X)=\sigma^2I$\\
-${Var}(\beta|X)={Var}((X^TX)^{-1}X^Ty|X)=(X^TX)^{-1}X^T{Var}(y|X)((X^TX)^{-1}X^T)^T=(X^TX)^{-1}X^T\sigma X(X^TX)^{-1}=\sigma^2 (X^TX)^{-1}X^TX(X^TX)^{-1}=\simga^2 (X^TX)^{-1} $\\
+\textit{Задание}: Заполнить матрицу ${Var}$, ${Cov}$ для соответсвующих элементов матрицы:\\\\
+\begin{tabular}{c||rrrrrr|}
+ &$ y $& $\hat{y}$ &$ u $& $\hat{u}$ &  $\hat{\beta}$ \\
+\hline
+\hline
+$ y $\\
+$ \hat{y} $\\
+$ u $\\
+$ \hat{u} $\\
+$ \hat{\beta} $\\
+$\ y_{test}$ \\
+$\hat{y}_{test}$ \\
+$\hat{u}_{test}$ \\
 
-${Cov}(\hat{\beta},\hat{u}|X)={Cov}((X^TX)^{-1}X^Ty,y-\hat{y}|X)=
+\hline
+\end{tabular}\\\\
+\textit{Решение}:
+\begin{doublespacing}
+
+Будем пользоваться результатами, полученными ранее:\\
+ $\hat\beta=(X^TX)^{-1}X^Ty$\\
+ $\hat{y}=X\hat\beta$\\
+ $\hat{u}=y-\hat{y}$\\
+ $ y_{test}=X_{test}\beta+u_{test}$\\
+ $\hat{y}_{test}=X_{test}\hat{\beta}$\\
+\end{doublespacing}
+\indent Предварительно найдём мат.ожидания:\\
+\noindent ${E}(y|X)={E}(X\beta+u|X)=X\beta+{E}(u|X)=X\beta$\\
+${E}(\beta|X)={E}((X^TX)^{-1}X^Ty|X)={E}((X^TX)^{-1}X^TX\beta|X)=(X^TX)^{-1}X^TX\beta=\beta$\\
+\indent Получим элементы мега-матрицы:\\
+${Var}(y|X)={Var}(X\beta+u|X)={Var}(u|X)=\sigma^2I$\\
+${Var}(\beta|X)={Var}((X^TX)^{-1}X^Ty|X)=(X^TX)^{-1}X^T{Var}(y|X)((X^TX)^{-1}X^T)^T=(X^TX)^{-1}X^T\sigma^2 X(X^TX)^{-1}=\sigma^2 (X^TX)^{-1}X^TX(X^TX)^{-1}= \sigma^2 (X^TX)^{-1} $\\
+${Cov}(\hat{\beta},\hat{u}|X)={Cov}((X^TX)^{-1}X^Ty, y-\hat{y}|X)=
 {Cov}((X^TX)^{-1}X^Ty,y|X)-{Cov}((X^TX)^{-1}X^Ty,\hat{y}|X)=(X^TX)^{-1}X^T{Var}(y|X)-{Cov}(\beta,X\beta|X)=\sigma^2(X^TX)^{-1}X^T-\sigma^2(X^TX)^{-1}X^T=0$\\
+\textit{\textbf{На контрольной работе - вывести 2 элемента мега-матрицы.}}
+\end{doublespacing}
 
 Выведем ещё пару свойств для $RSS, ESS, TSS$:\\
 Как можно представить RSS?\\
 $RSS=\sum\limits_{i=1}^n  \hat{u_i}^2=\hat{u}^T\hat{u}=((I-H)y)^T((I-H)y)=
 y^T(I-H)^T(I-H)y=y^T(I-H)y$\\
-Далее, найдем матетическое ожидание $RSS$ при фиксированном $X$:\\
+Далее, найдем математическое ожидание $RSS$ при фиксированном $X$:\\
 ${E}(RSS|X)={E}(y^T(I-H)y|X)=|$всегда можно взять $trace$, если результат скаляр$|={E}(tr(y^T(I-H)y|X))={E}(tr(I-H)yy^T|X))=tr((I-H){E}(yy^T))=tr(I-H)({Var}(y|X)+{E}(y|X){E}(y^T|X))=tr(I-H)(\sigma^2I+X\beta\beta^TX^T))=tr[(I-H)(\sigma^2I+X\beta\beta^TX^T))]=tr(I-H)\sigma^2+tr((I-H)(X\beta\beta^TX^T))=tr(I-H)\sigma^2=(n-k)\sigma^2$\\
 Слагаемое $(I-H)X=0$, так как $(I-H)$ - ортогональное дополнение к $X$.\\
 ${{E}(RSS|X)=(n-k)\sigma^2}\\ \Rightarrow
 {\hat{\sigma}^2={{RSS}\over{n-k}}}$ - оценка разумная.\\
+
 \subsection{Теорема Гаусса - Маркова}\\
 \newtheorem{theorem}{\textit{Теорема}.}
-Если выполняются все предпосылки про $\beta,u,X$, существует несмещенные оценки $\hat{\beta}=(X^TX)^{-1}X^Ty$ и $\hat{\beta}_{alt}=A_{alt}^Ty$, то:\\
-\\
-- ${Var}({\hat{\beta}_{alt_j})} \gq {Var}(\hat{\beta}_j|X)$\\
-- ${Var}({\hat{\beta}_{alt})}-{Var}(\hat{\beta}|X)$ являетеся положительно определенной.\\
+Если выполняются все предпосылки про $\beta,u,X$, существуют несмещенные оценки  $\hat{\beta}=(X^TX)^{-1}X^Ty$  и  $\hat{\beta}_{alt}=A_{alt}^Ty,  $  то:\\
+\indent ${Var}({\hat{\beta}_{alt_j})} \geq{{Var}(\hat{\beta}_j|X)}$ \\
+\indent ${Var}({\hat{\beta}_{alt})}-{Var}(\hat{\beta}|X)$ являетеся положительно определенной.
 
-\textit{Замечение.} Первая формулировка является частным и упрощенным вариантом второй формулировки.
-\begin{proof}
+\textit{Замечание.} Первая формулировка является частным и упрощенным вариантом второй формулировки.
+\begin{proof}\\
 
 $\hat{\beta}=((X^TX)^{-1}X^T)^Ty=A^Ty\\$
-$\hat{\beta}_1$ - 1 строка из $A^T$.
-$\hat{\beta_1}$ - <первый столбец в $A$,y>
-$A$ задаёт веса, с которыми надо брать $y$, чтобы получить \hat{\beta}\\
+$\hat{\beta}_1$ - 1 строка из $A^T$. Также
+$\hat{\beta_1}$ - <первый столбец в $A$,  y>
+$A$ задаёт веса, с которыми надо брать $y$, чтобы получить $\hat{\beta}$.\\
 Рассмотрим, каким образом собрана матрица $A$:\\
 
 
@@ -235,33 +262,34 @@ $\omega^T\omega \geq 0 \\
 1) a \in lin(столбцы X);\\
 2) a^T-a \perp lin(стоблцы X)$\\
 \end{proof}\\
-Утв.
+\textit{Теоремы без доказательства}\\
 Если верны предпосылки о $\beta, X, u,$ и известно, что $u \sim N(0;\sigma^2I)$, то: \\
-1) $\hat{\beta}_j|X \sim N(\beta_j, {Var}(\hat{\beta}_j|X))$\\
+\indent 1) $\hat{\beta}_j|X \sim N(\beta_j, {Var}(\hat{\beta}_j|X))$
+\\
+\indent 2) $\frac{\hat{\beta}_j-\beta_j}{{Var}(\beta_j|X)}=\frac{\hat{\beta}_j-\beta_j}{\kappa(\beta_j)}$
+\\
+\indent 3) Если $\exists$ 2 вложенные модели: "short" - частный случай "long", то:\\
+$$ \frac{\frac{{RSS}_s-RSS_l}{k_l-k_s}}  {\frac{RSS_l}{n-k_l}} \sim F_{k_l-k_s,n-k_l}$$\\
 
-2) $\frac{\hat{\beta}_j-\beta_j}{{Var}(\beta_j|X)}=\frac{\hat{\beta}_j-\beta_j}{\kappa(\beta_j)}$\\
-
-3)Если $\exists$ 2 вложенные модели: "короткая" - частный случай "длинной", то:\\
-$$\frac{\frac{RSS_{кор}-RSS{длин}}{k_{длин}-k_{кор}}}   {\frac{RSS_{длин}}{n-k_{длин}}} \sim F_{k_{длин}-k_{кор},n-k_{длин}}$$\\
-
-Задача
-Дано:
-Модель А: $\hat{y}_i=2.7 - 3.2x_i, R^2=0.6\\
-                    (1.1) (0.6)  \\$
-Модель В: $\hat{y}_i=3.2 - 2.8x_i + 4.2z_i + 0.1x_i^2, R^2=0.7\\
-                    (1.2) (0.7)    (1.1)    (0.5)$\\
+\textbf{\textit{Задача}}\\
+\textit{Дано:} 200 наблюдений.\\
+Модель А: $\hat{y}_i=2.7 - 3.2x_i, \hspace{10pt} R^2=0.6$\\
+\indent \hspace{2cm} (1.1)\hspace{10pt}(0.6) \\
+Модель В: $\hat{y}_i=3.2 - 2.8x_i + 4.2z_i + 0.1x_i^2, \hspace{10pt} R^2=0.7\\
+\indent \hspace{2cm}  (1.2) \hspace{10pt} (0.7) \hspace{10pt} (1.1)  \hspace{10pt}  (0.5)$\\
 В скобках ниже указаны стандартные ошибки\\
 
 Задание:
-Проверить гипотезу на стат. значимость при уровне доверия $\alpha = 5\% $  \\
-$H_0$: верна А.\\
+Проверить гипотезу на стат. значимость при уровне значимости $\alpha = 5\% $  \\
+$H_0$: верна модель А.\\
 $H_A$: А - неверна, но верна В.\\
 
 Постройте 95\% доверительный интервал для \beta_x в рамках:\\
-$$\frac{\hat{\beta}_x - {\beta}_x}{\kappa(\hat{\beta}_x)} \sim t_{200-2} $$ \\
-$t_192 = N(0;1)$\\
-$-t_{cr} \leq \frac{\hat{\beta}_x - {\beta}_x}{\kappa(\hat{\beta}_x)} \geq t_{cr} $\\
-$\beta_x \in [\hat{\beta_x} - t_{cr}\kappa(\hat{\betta});\hat{\betta}_x + t_{cr}\kappa|\betta|X]$\\
+$$\frac{\hat{\beta}_x - {\beta}_x}{\varkappa(\hat{\beta}_x)} \sim t_{200-2}$$ \\
+$t_{192} = N(0;1)$\\
+$-t_{cr} \leq \frac{\hat{\beta}_x - {\beta}_x}{\varkappa(\hat{\beta}_x)} \leq t_{cr} $\\
+Дробь с вероятностью 95\% лежит от -1.96 до 1.96.
+$\beta_x \in [\hat{\beta_x} - t_{cr} \varkappa (\hat{\betta});\hat{\betta}_x + t_{cr} \varkappa|\betta|X]$\\
 $\beta_x \in [3.2 - 1.96*0.6; -3.2 + 1.96*0.6] \approx [-4.4;2.0]$\\
 $H_0:\beta_x=0$\\
 $H_A:\beta \neq 0, при \alpha==5\%$\\
@@ -275,7 +303,7 @@ $F_{cr} = 3.04$\\
 Сравним $F_{cr}$ с $F_{2,196}$, видим, что гипотеза $H_0$ отвергается, поэтому выбираем модель В для оценки.  
 
 
-
+$$ \frac{\frac{{RSS}_s-RSS_l}{k_l-k_s}}  {\frac{RSS_l}{n-k_l}} \sim F_{k_l-k_s,n-k_l}$$
                     
                 
                 
