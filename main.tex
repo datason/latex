@@ -247,12 +247,11 @@ $a_1=*C_1+*C_2+...+*C_k$
   \ a_1
 \end{Vmatrix}^2 \geq {Var}(\hat{\beta_1}|X)$\\
 
-Схема доказательства:\\
-1) $a_1 \in lin(...) \\
+Краткая схема доказательства:\\
+1)$a_1 \in lin(...)$\\
 Это следует из A=X(X^TX)^{-1}\\
-
-2) a_1^{alt}-a_1 \perp lin(...) \\
-Это следует из (a_1^{alt})^TX\beta=\beta_1=a_1^TX\beta$\\
+2)$a_1^{alt}-a_1 \perp lin(...) $\\
+Это следует из $(a_1^{alt})^TX\beta=\beta_1=a_1^TX\beta$\\
 Рассмотрим доказательство для общего случая:\\
 $\delta={Var}(\hat{\beta}^{alt}|X)-{Var}(\hat{\beta}|X)\\
 \delta - $ положительно определённая.\\
@@ -261,15 +260,15 @@ $\omega^T\omega \geq 0 \\
 {Var}(a_{alt}^TY|X) \geq {Var}(a^Ty|X)\\
 1) a \in lin(столбцы X);\\
 2) a^T-a \perp lin(стоблцы X)$\\
-\end{proof}\\
+\end{proof}
 \textit{Теоремы без доказательства}\\
 Если верны предпосылки о $\beta, X, u,$ и известно, что $u \sim N(0;\sigma^2I)$, то: \\
 \indent 1) $\hat{\beta}_j|X \sim N(\beta_j, {Var}(\hat{\beta}_j|X))$
 \\
-\indent 2) $\frac{\hat{\beta}_j-\beta_j}{{Var}(\beta_j|X)}=\frac{\hat{\beta}_j-\beta_j}{\kappa(\beta_j)}$
+\indent 2) $\frac{\hat{\beta}_j-\beta_j}{{Var}(\hat{\beta}_j|X)}=\frac{\hat{\beta}_j-\beta_j}{\kappa(\hat{\beta}_j)} \sim t_{n-k}$
 \\
 \indent 3) Если $\exists$ 2 вложенные модели: "short" - частный случай "long", то:\\
-$$ \frac{\frac{{RSS}_s-RSS_l}{k_l-k_s}}  {\frac{RSS_l}{n-k_l}} \sim F_{k_l-k_s,n-k_l}$$\\
+$$ \frac{\frac{{RSS}_s-RSS_l}{k_l-k_s}}  {\frac{RSS_l}{n-k_l}} \sim F_{k_l-k_s,n-k_l}$$
 
 \textbf{\textit{Задача}}\\
 \textit{Дано:} 200 наблюдений.\\
@@ -278,32 +277,33 @@ $$ \frac{\frac{{RSS}_s-RSS_l}{k_l-k_s}}  {\frac{RSS_l}{n-k_l}} \sim F_{k_l-k_s,n
 Модель В: $\hat{y}_i=3.2 - 2.8x_i + 4.2z_i + 0.1x_i^2, \hspace{10pt} R^2=0.7\\
 \indent \hspace{2cm}  (1.2) \hspace{10pt} (0.7) \hspace{10pt} (1.1)  \hspace{10pt}  (0.5)$\\
 В скобках ниже указаны стандартные ошибки\\
-
-Задание:
-Проверить гипотезу на стат. значимость при уровне значимости $\alpha = 5\% $  \\
+\textit{Задание}:
+1. Проверить гипотезу при уровне значимости $\alpha = 5\% $  \\
 $H_0$: верна модель А.\\
-$H_A$: А - неверна, но верна В.\\
+$H_A$: модель А - неверна, но верна В.
 
-Постройте 95\% доверительный интервал для \beta_x в рамках:\\
-$$\frac{\hat{\beta}_x - {\beta}_x}{\varkappa(\hat{\beta}_x)} \sim t_{200-2}$$ \\
-$t_{192} = N(0;1)$\\
-$-t_{cr} \leq \frac{\hat{\beta}_x - {\beta}_x}{\varkappa(\hat{\beta}_x)} \leq t_{cr} $\\
+\noindent 2.Постройте 95\% доверительный интервал для $\beta_x.$\\
+\textit{Решение}\\Из теоремы 2 :\\
+$$ \frac{\hat{\beta}_x-\beta_x}{\kappa(\hat{\beta}_x)}\sim t_{200-2}$$
+T-распределение с 198 степенями свободы очень похоже на нормальное.\\
+$t_{198} = N(0;1)$\\
+$-t_{cr} \leq \frac{\hat{\beta}_x-\beta_x}{\kappa(\hat{\beta}_x)} \leq t_{cr} $\\
 Дробь с вероятностью 95\% лежит от -1.96 до 1.96.
-$\beta_x \in [\hat{\beta_x} - t_{cr} \varkappa (\hat{\betta});\hat{\betta}_x + t_{cr} \varkappa|\betta|X]$\\
-$\beta_x \in [3.2 - 1.96*0.6; -3.2 + 1.96*0.6] \approx [-4.4;2.0]$\\
+$\beta_x \in [\hat{\beta_x} - t_{cr} \kappa(\hat{\beta}_x)}; \hat{\beta_x} + t_{cr} \kappa(\hat{\beta}_x)}$\\
+$\beta_x \in [-3.2 - 1.96*0.6; -3.2 + 1.96*0.6] \approx [-4.4;2.0]$\\
+Предположим, $\beta_x$=0, попадает в $[-4.4;2.0]$.\\
 $H_0:\beta_x=0$\\
-$H_A:\beta \neq 0, при \alpha==5\%$\\
+$H_A:\beta \neq 0, при \alpha=5\%$\\
 $H_0$ отвергается, $\beta_x$ значительно отличается от нуля.\\
-
 $$R^2=1-\frac{RSS}{TSS}$$\\
+Воспользуемся 3 теоремой:\\
+$$ \frac{\frac{{RSS}_s-RSS_l}{k_l-k_s}}  {\frac{RSS_l}{n-k_l}} \sim F_{k_l-k_s,n-k_l}$$
 
-$$F=\frac{\frac{RSS_{кор}-RSS_{дл}}{4-2}}{\frac{RSS_{дл}}{200-4}}=\frac{(\frac{RSS_к}{TSS}-\frac{RSS_д}{TSS})/2}{\frac{RSS_д}{TSS}/196}=
+$$ \frac{\frac{{RSS}_s-RSS_l}{4-2}}  {\frac{RSS_l}{200-196}}=\frac{\frac{{RSS}_s-RSS_l}{TSS}/2}  {\frac{RSS_l}{TSS}/196}=
 \frac{(0.4-0.3)*196}{2*0.3} \approx 3.04$$\\
 $F_{cr} = 3.04$\\
-Сравним $F_{cr}$ с $F_{2,196}$, видим, что гипотеза $H_0$ отвергается, поэтому выбираем модель В для оценки.  
+Сравним $F_{cr}$ с $F_{2,196}$, видим, что гипотеза $H_0$ отвергается, поэтому выбираем модель B для оценки.  
 
-
-$$ \frac{\frac{{RSS}_s-RSS_l}{k_l-k_s}}  {\frac{RSS_l}{n-k_l}} \sim F_{k_l-k_s,n-k_l}$$
                     
                 
                 
